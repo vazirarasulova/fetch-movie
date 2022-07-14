@@ -1,0 +1,14 @@
+
+.list{
+  width: 1100px;
+  flex-wrap: wrap;
+  margin: 50px auto;
+}
+
+.card{
+  height: 350px;
+}
+
+.card-img-top{
+  height: 250px !important;
+}
