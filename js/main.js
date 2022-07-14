@@ -60,7 +60,7 @@ async function getMovie() {
 
 elInput.addEventListener("change", (evt) => {
   search = evt.target.value;
-  getMovie();
+  getMovie()
 })
 
 
