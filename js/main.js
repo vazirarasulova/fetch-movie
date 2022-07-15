@@ -35,8 +35,8 @@ const renderMovie = (arr, element) =>{
     newItem.appendChild(newYear);
     
     fragment.appendChild(newItem)
-    element.appendChild(fragment);
   });
+  element.appendChild(fragment);
 }
 
 // fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`)
@@ -49,7 +49,7 @@ const renderMovie = (arr, element) =>{
 
 
 async function getMovie() {
-  const response = await fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`)
+  const response = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`)
   const data = await response.json()
   
   if(data.Response && data.Search.length){
