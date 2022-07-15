@@ -63,5 +63,5 @@ elInput.addEventListener("change", (evt) => {
   getMovie()
 })
 
-
+getMovie();
 
