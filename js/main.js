@@ -1,5 +1,6 @@
 const elList = document.querySelector(".list");
 const elInput = document.querySelector(".header__input");
+const elSelect = document.querySelector(".form-select");
 
 let search = elInput.value;
 let API_KEY = "8311d5a5"; 
@@ -10,7 +11,6 @@ const renderMovie = (arr, element) =>{
   element.innerHTML = null;
   
   arr.forEach(item => {
-    console.log(item);
     const newItem = document.createElement("li");
     const newImg = document.createElement("img");
     const newTitle = document.createElement("h3");
@@ -39,6 +39,27 @@ const renderMovie = (arr, element) =>{
   element.appendChild(fragment);
 }
 
+function renderType(arr, element) {
+
+  let included = [];
+
+  arr.forEach((item) => {
+      if (!included.includes(item.Type)) {
+        included.push(item.Type);
+      }
+    });
+ 
+
+  included.forEach((item) => {
+    const newOption = document.createElement("option");
+    newOption.value = item;
+    newOption.textContent = item;
+    element.appendChild(newOption);
+  });
+  
+}
+
+
 // fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`)
 // .then((response) => response.json())
 //  .then((data) => {
@@ -48,20 +69,33 @@ const renderMovie = (arr, element) =>{
 // })
 
 
+let movies = [];
 async function getMovie() {
-  const response = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`)
-  const data = await response.json()
-  
-  if(data.Response && data.Search.length){
+  const response = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`);
+  const data = await response.json();
+  movies = [...data.Search];
+
+  if(data.Response && data.Search){
     renderMovie(data.Search, elList);
+    renderType(data.Search, elSelect);
   }
-  
 }
+  
 
 elInput.addEventListener("change", (evt) => {
   search = evt.target.value;
   getMovie()
 })
+
+elSelect.addEventListener("change", (evt) => {
+  evt.preventDefault();
+
+  let elSelectVal = evt.target.value;
+  let filterTypes = elSelectVal == "Filter by Type" ? movies : movies.filter((item) => item.Type.includes(elSelectVal));
+
+  renderMovie(filterTypes, elList);
+});
+
 
 getMovie();
 
